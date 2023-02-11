@@ -20,3 +20,13 @@ INSERT INTO easybankdb.authorities VALUES (NULL, 'happy', 'write');
 
 SELECT * FROM easybankdb.authorities;
 SELECT * FROM easybankdb.users;
+
+CREATE TABLE `easybankdb`.`customer` (
+`id` int NOT NULL AUTO_INCREMENT,
+`email` varchar(45) NOT NULL,
+`pwd` varchar(45) NOT NULL,
+`role` varchar(45) NOT NULL,
+PRIMARY KEY(`id`)
+);
+
+INSERT INTO easybankdb.customer(`email`, `pwd`, `role`) VALUES ('johndoe@email.com', '12345', 'admin');
