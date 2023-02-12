@@ -20,9 +20,10 @@ public class ProjectSecurityConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
         //httpSecurity.authorizeRequests().anyRequest().authenticated();
         //httpSecurity.authorizeHttpRequests()  -- this also works as below
-        httpSecurity.authorizeRequests()
+        httpSecurity.csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/myAccount","/myBalance","/myLoans","/myCards").authenticated()
-                .antMatchers("/notices","/contact").permitAll()
+                .antMatchers("/notices","/contact", "/register").permitAll()
                         .and().formLogin()
                         .and().httpBasic();
 
