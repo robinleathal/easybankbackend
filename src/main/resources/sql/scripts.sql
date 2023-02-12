@@ -30,3 +30,8 @@ PRIMARY KEY(`id`)
 );
 
 INSERT INTO easybankdb.customer(`email`, `pwd`, `role`) VALUES ('johndoe@email.com', '12345', 'admin');
+
+--If we get SQL Error: 1406, SQLState: 22001  (Data truncation: Data too long for column 'pwd' at row 1)
+
+ALTER TABLE `easybankdb`.`customer`
+  MODIFY COLUMN `pwd` varchar(60);
