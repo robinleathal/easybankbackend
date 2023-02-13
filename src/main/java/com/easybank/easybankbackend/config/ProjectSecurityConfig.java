@@ -31,9 +31,8 @@ public class ProjectSecurityConfig {
                         corsConfig.setMaxAge(3600L);
                         return corsConfig;
                     }
-                }).and()
-                .csrf().disable()
-                .authorizeRequests()
+                }).and().csrf().ignoringAntMatchers("/contact", "/register")
+                .and().authorizeRequests()
                 .antMatchers("/myAccount","/myBalance","/myLoans","/myCards", "/user").authenticated()
                 .antMatchers("/notices","/contact", "/register").permitAll()
                         .and().formLogin()
