@@ -9,14 +9,30 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 
 
 @Configuration
 public class ProjectSecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable()
+        httpSecurity.cors().configurationSource(new CorsConfigurationSource() {
+                    @Override
+                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+                        CorsConfiguration corsConfig = new CorsConfiguration();
+                        corsConfig.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+                        corsConfig.setAllowedMethods(Collections.singletonList("*"));
+                        corsConfig.setAllowCredentials(true);
+                        corsConfig.setAllowedHeaders(Collections.singletonList("*"));
+                        corsConfig.setMaxAge(3600L);
+                        return corsConfig;
+                    }
+                }).and()
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/myAccount","/myBalance","/myLoans","/myCards", "/user").authenticated()
                 .antMatchers("/notices","/contact", "/register").permitAll()
